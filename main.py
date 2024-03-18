@@ -3,6 +3,8 @@ import pygame
 from graphics import get_background, draw
 from character import Player, FloatingEnemy
 
+from decorators import health_bar_decorator
+
 WIDTH, HEIGHT = 800, 600
 FPS = 60
 PLAYER_VEL = 5
@@ -35,12 +37,14 @@ def main(window):
     clock = pygame.time.Clock()
     background, bg_image = get_background("fon.png", WIDTH, HEIGHT)
 
-    player = Player(200, 200, 100, 180, name='player', image_name='valorant.png')
+    hb_player = health_bar_decorator(Player)
+    player = hb_player(200, 200, 100, 180, name='player', image_name='valorant.png', health=5, fps=FPS)
 
     enemies = pygame.sprite.Group()
     objects = pygame.sprite.Group() #for static
 
-    miku1 = FloatingEnemy(200, 200, 120, 150, name='enemy', image_name='miku.webp', x_range = (200, 200), y_range = (200, 250), x_vel=5, y_vel=2)
+    hb_enemy = health_bar_decorator(FloatingEnemy)
+    miku1 = hb_enemy(400, 200, 120, 150, name='enemy', image_name='miku.webp', x_range = (200, 200), y_range = (200, 250), x_vel=5, y_vel=2, health=8, fps=FPS)
 
     enemies.add(miku1)
 

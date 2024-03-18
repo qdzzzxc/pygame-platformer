@@ -3,7 +3,7 @@ from os.path import join
 from graphics import flip
 
 class MovingObject(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, name=None, image_name='player.png', direction = "right", health=3):
+    def __init__(self, x, y, width, height, name=None, image_name='player.png', direction = "right", health=3, fps=60):
         super().__init__()
         self.rect = pygame.Rect(x, y, width, height)
         self.width = width
@@ -17,6 +17,9 @@ class MovingObject(pygame.sprite.Sprite):
 
         image = pygame.image.load(join("assets", name, image_name))
         self.image = pygame.transform.scale(image, (width, height))
+
+        self.after_hit = 0
+        self.fps = fps
 
     
     def draw(self, win, offset_x, offset_y):
@@ -75,8 +78,8 @@ bullet_width = 70
 bullet_height = 20
 bullet_x_vel = 15
 class Player(MovingObject):
-    def __init__(self, x, y, width, height, name='player', image_name='player.png', direction='right'):
-        super().__init__(x, y, width, height, name, image_name, direction)
+    def __init__(self, x, y, width, height, name='player', image_name='player.png', direction='right', health=5, fps=60):
+        super().__init__(x, y, width, height, name, image_name, direction, health, fps)
         self.bullets = pygame.sprite.Group()
 
     def update(self):
@@ -116,8 +119,8 @@ class Bullet(MovingObject):
             self.delete_object()
 
 class FloatingEnemy(MovingObject):
-    def __init__(self, x, y, width, height, name='enemy', image_name='default_enemy.png', direction='right', x_range = (200, 200), y_range = None,  x_vel=3, y_vel=2):
-        super().__init__(x, y, width, height, name, image_name, direction)
+    def __init__(self, x, y, width, height, name='enemy', image_name='default_enemy.png', direction='right', x_range = (200, 200), y_range = None,  x_vel=3, y_vel=2, health=3, fps=60):
+        super().__init__(x, y, width, height, name, image_name, direction, health, fps)
 
         if x_range:
             self.left_pos_x = x - x_range[0]

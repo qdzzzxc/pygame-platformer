@@ -41,9 +41,22 @@ def draw(window, background, bg_image, player, objects, offset_x, offset_y, enem
         obj.draw(window, offset_x, offset_y)
 
     for obj in enemies:
+        if hasattr(obj, 'display_health'):
+            obj.display_health(window, offset_x, offset_y)
         obj.draw(window, offset_x, offset_y)
 
+    if hasattr(player, 'display_health'):
+        player.display_health(window, offset_x, offset_y)
     player.draw(window, offset_x, offset_y)
+
+    player_attacked_by = pygame.sprite.spritecollide(player, enemies, False)
+    for i in player_attacked_by:
+        if not player.after_hit:
+            player.after_hit = 5*player.fps
+            player.make_hit()
+        break
+    if player.after_hit:
+         player.after_hit -= 1
     
     for bullet in player.bullets:
         damaged_by_player = pygame.sprite.spritecollide(bullet, enemies, False)
