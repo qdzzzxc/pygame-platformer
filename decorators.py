@@ -15,8 +15,6 @@ def health_bar_decorator(character_class, width=100, height=10, color_full=(0, 2
             self.tick = pygame.Surface((width//25, height))
             self.tick.fill((0, 0, 0))
 
-            print(self.ticks)
-
             self.full_rect = pygame.Surface((width, height))
             self.full_rect.fill(color_full)
 

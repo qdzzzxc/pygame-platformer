@@ -19,7 +19,7 @@ def get_background(name, WIDTH, HEIGHT):
     return tiles, image
 
 
-def draw(window, background, bg_image, player, objects, offset_x, offset_y, enemies, bg_slow=(1, 1)):
+def draw(window, background, bg_image, player, objects, offset_x, offset_y, enemies, bg_slow=(1, 1), sec_after_hit=1):
     _, _, w, h = bg_image.get_rect()
     bg_slow_x, bg_slow_y = bg_slow
 
@@ -52,7 +52,7 @@ def draw(window, background, bg_image, player, objects, offset_x, offset_y, enem
     player_attacked_by = pygame.sprite.spritecollide(player, enemies, False)
     for i in player_attacked_by:
         if not player.after_hit:
-            player.after_hit = 5*player.fps
+            player.after_hit = sec_after_hit*player.fps
             player.make_hit()
         break
     if player.after_hit:

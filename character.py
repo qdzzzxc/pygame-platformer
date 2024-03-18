@@ -71,7 +71,6 @@ class MovingObject(pygame.sprite.Sprite):
 
     def delete_object(self):
         self.kill()
-        del self
 
 
 bullet_width = 70
@@ -163,8 +162,6 @@ class FloatingEnemy(MovingObject):
             self.move_up(self.velocity_y)
         else:
             self.move_down(self.velocity_y)
-            
-        
 
     def update(self):
         if self.x_ranged:
